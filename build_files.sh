@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 echo "Installing project dependencies..."
 python3 -m pip install -r requirements.txt
 

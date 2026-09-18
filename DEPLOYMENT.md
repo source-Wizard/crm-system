@@ -1,4 +1,4 @@
-﻿# Deploying TechNova CRM to GitHub and Vercel Free Tier
+# Deploying TechNova CRM to GitHub and Vercel Free Tier
 
 This guide provides step-by-step instructions to upload your Django CRM project to GitHub and deploy it live on **Vercel** using their 100% free hobby tier.
 
