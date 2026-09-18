@@ -172,8 +172,11 @@ def revenue_report(request):
              p.customer.company_name, p.payment_method, p.transaction_reference or '-',
              str(p.amount)] for p in payments]
     total = sum(p.amount for p in payments)
-    monthly = list(Payment.objects.extra(select={'m': "DATE_FORMAT(payment_date, '%%Y-%%m')"})
-                   .values('m').annotate(total=Sum('amount')).order_by('m'))
+    monthly_dict = {}
+    for p in Payment.objects.filter(payment_date__isnull=False).order_by('payment_date'):
+        m_str = p.payment_date.strftime('%Y-%m')
+        monthly_dict[m_str] = monthly_dict.get(m_str, 0) + float(p.amount or 0)
+    monthly = [{'m': k, 'total': round(v, 2)} for k, v in sorted(monthly_dict.items())]
     if request.GET.get('format'):
         return _export_response(request, header, rows, 'revenue_report')
     return render(request, 'reports/revenue.html', {
