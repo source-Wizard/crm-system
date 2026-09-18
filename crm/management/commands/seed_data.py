@@ -226,7 +226,7 @@ class Command(BaseCommand):
             u = User(username=username, first_name=fn, last_name=ln,
                      email=f'{username}@technova.com', phone=f'+1 555-{random.randint(100,999)}-{random.randint(1000,9999)}',
                      address=f'{random.randint(10, 999)} {random.choice(STREET_PARTS)}, {city}',
-                     status='Active' if random.random() > 0.06 else 'Inactive',
+                     status='Active' if (username in ['admin', 'manager', 'sales', 'support'] or random.random() > 0.06) else 'Inactive',
                      role=role_by_name[role_name])
             u.set_password('Admin@123')
             u.save()

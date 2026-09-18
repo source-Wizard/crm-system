@@ -21,13 +21,15 @@ if os.environ.get('VERCEL'):
         tmp_db = '/tmp/db.sqlite3'
         seed_db = base_dir / 'db_seed.sqlite3'
         if not os.environ.get('DATABASE_URL') and not os.environ.get('DB_HOST'):
-            if not os.path.exists(tmp_db):
-                if seed_db.exists():
-                    os.makedirs(os.path.dirname(tmp_db), exist_ok=True)
-                    shutil.copyfile(str(seed_db), tmp_db)
-                else:
-                    from django.core.management import call_command
-                    call_command('migrate', interactive=False)
+            needs_copy = not os.path.exists(tmp_db)
+            if not needs_copy and seed_db.exists():
+                needs_copy = (seed_db.stat().st_size != os.path.getsize(tmp_db))
+            if needs_copy and seed_db.exists():
+                os.makedirs(os.path.dirname(tmp_db), exist_ok=True)
+                shutil.copyfile(str(seed_db), tmp_db)
+            elif not os.path.exists(tmp_db):
+                from django.core.management import call_command
+                call_command('migrate', interactive=False)
     except Exception as exc:
         print("Vercel DB bootstrap notice:", exc)
 
