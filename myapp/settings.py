@@ -76,12 +76,13 @@ if os.environ.get('DATABASE_URL'):
             'OPTIONS': {'charset': 'utf8mb4'} if 'mysql' in _url.scheme else {},
         }
     }
-elif IS_VERCEL and (not DB_HOST or DB_HOST in ('127.0.0.1', 'localhost')):
+elif (IS_VERCEL and (not DB_HOST or DB_HOST in ('127.0.0.1', 'localhost', ''))) or os.environ.get('USE_SQLITE'):
     # When deployed to Vercel without cloud DB credentials configured, fallback to SQLite
+    sqlite_path = os.environ.get('SQLITE_PATH', '/tmp/db.sqlite3' if IS_VERCEL else BASE_DIR / 'db.sqlite3')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/tmp/db.sqlite3',
+            'NAME': sqlite_path,
         }
     }
 else:

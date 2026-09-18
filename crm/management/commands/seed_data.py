@@ -235,12 +235,15 @@ class Command(BaseCommand):
             users.append(u)
 
         mk('admin', 'Alvin', 'Duran', 'Super Admin', 0)
-        mk('rsmith', 'Robert', 'Smith', 'Admin', 1)
-        mk('ljohnson', 'Lisa', 'Johnson', 'Admin', 2)
-        mk('mgr_davis', 'Angela', 'Davis', 'Manager', 3)
-        for i in range(4):
+        mk('manager', 'Morgan', 'Taylor', 'Manager', 1)
+        mk('sales', 'Sam', 'Wilson', 'Sales Representative', 2)
+        mk('support', 'Sarah', 'Connor', 'Support Staff', 3)
+        mk('rsmith', 'Robert', 'Smith', 'Admin', 4)
+        mk('ljohnson', 'Lisa', 'Johnson', 'Admin', 5)
+        mk('mgr_davis', 'Angela', 'Davis', 'Manager', 6)
+        for i in range(3):
             f, l = rand_person()
-            mk(f'mgr_{f.lower()}.{l.lower()}', f, l, 'Manager', i + 4)
+            mk(f'mgr_{f.lower()}.{l.lower()}', f, l, 'Manager', i + 7)
         sales_firsts = ['Michael', 'Sarah', 'James', 'Emily', 'David', 'Ashley', 'Chris', 'Amanda',
                         'Daniel', 'Jessica', 'Matt', 'Nicole', 'Kevin', 'Rachel', 'Brian', 'Laura',
                         'Justin', 'Megan', 'Eric', 'Stephanie', 'Aaron', 'Olivia', 'Nathan', 'Grace',
